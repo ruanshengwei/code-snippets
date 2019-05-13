@@ -10,6 +10,10 @@ public class SynchronizedDemo {
 
     private static int i=0;
 
+    /**
+     * 通过修改 变量 i 的值。控制其处于 0 1 两个之间变化。
+     * @param args
+     */
     public static void main(String[] args) {
 
         new Thread(()->{
@@ -30,6 +34,7 @@ public class SynchronizedDemo {
                }
             }
         }).start();
+
         new Thread(()->{
 
             synchronized (lock){
