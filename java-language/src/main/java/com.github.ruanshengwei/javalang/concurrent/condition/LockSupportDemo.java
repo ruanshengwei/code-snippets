@@ -1,4 +1,4 @@
-package com.github.ruanshengwei.concurrent.condition;
+package com.github.ruanshengwei.javalang.concurrent.condition;
 
 import java.util.concurrent.locks.LockSupport;
 

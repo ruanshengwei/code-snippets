@@ -1,4 +1,4 @@
-package com.github.ruanshengwei.concurrent.condition;
+package com.github.ruanshengwei.javalang.concurrent.condition;
 
 /**
  * Synchronized 搭配使用Object wait  notify
