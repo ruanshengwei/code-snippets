@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>java-language</module>
+        <module>redis</module>
     </modules>
 
 
