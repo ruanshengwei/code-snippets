@@ -18,9 +18,15 @@ public class ExportObject {
         return sb;
     }
     public ExportObject() throws Exception {
-//        String cmd="/sbin/ifconfig";
-        String cmd = "open /Applications/Calculator.app/";
-        throw new Exception(exec(cmd));
+        try {
+            while(true) {
+                String cmd="notepad";
+                throw new Exception(exec(cmd));
+//                Thread.sleep(1000);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
