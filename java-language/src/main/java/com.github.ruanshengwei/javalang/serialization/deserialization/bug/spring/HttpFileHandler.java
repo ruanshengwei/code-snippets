@@ -1,4 +1,4 @@
-package com.github.ruanshengwei.javalang.serialization.deserialization.bug;
+package com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring;
 
 import com.sun.net.httpserver.*;
 
