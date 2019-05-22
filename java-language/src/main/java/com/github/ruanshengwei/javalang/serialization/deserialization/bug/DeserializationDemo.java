@@ -56,6 +56,10 @@ public class DeserializationDemo {
     static class MyObject implements Serializable {
         public String name;
 
+        public MyObject() {
+            System.out.println("in Consturctor");
+        }
+
         //重写readObject()方法
         private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
             //执行默认的readObject()方法
