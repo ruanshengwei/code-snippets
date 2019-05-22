@@ -8,22 +8,28 @@ import java.io.*;
  */
 public class MyObject implements Serializable {
 
-//    public static String exec(String cmd) throws Exception {
-//        String sb = "";
-//        BufferedInputStream in = new BufferedInputStream(Runtime.getRuntime().exec(cmd).getInputStream());
-//        BufferedReader inBr = new BufferedReader(new InputStreamReader(in));
-//        String lineStr;
-//        while ((lineStr = inBr.readLine()) != null){
-//            sb += lineStr + "\n";
-//        }
-//        inBr.close();
-//        in.close();
-//        return sb;
-//    }
+    private static final long serialVersionUID = -4365286012503534L;
+
+    public static String exec(String cmd) throws Exception {
+        String sb = "";
+        BufferedInputStream in = new BufferedInputStream(Runtime.getRuntime().exec(cmd).getInputStream());
+        BufferedReader inBr = new BufferedReader(new InputStreamReader(in));
+        String lineStr;
+        while ((lineStr = inBr.readLine()) != null){
+            sb += lineStr + "\n";
+        }
+        inBr.close();
+        in.close();
+        return sb;
+    }
 
     public MyObject() {
 
         System.out.println("Constructor MyObject");
+    }
+
+    public void test(){
+        System.out.println("run test in client");
     }
 
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {

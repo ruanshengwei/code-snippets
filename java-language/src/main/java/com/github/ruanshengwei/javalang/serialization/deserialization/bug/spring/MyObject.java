@@ -11,9 +11,15 @@ import java.io.Serializable;
  */
 public class MyObject implements Serializable {
 
+    private static final long serialVersionUID = -4365286012503534L;
+
     public MyObject() {
 
         System.out.println("Constructor MyObject");
+    }
+
+    public void test(){
+        System.out.println("run test in server");
     }
 
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
