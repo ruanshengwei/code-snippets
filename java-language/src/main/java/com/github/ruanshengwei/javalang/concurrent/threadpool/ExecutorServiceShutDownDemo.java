@@ -4,6 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * 测试
  * 可以通过调用线程池的shutdown或shutdownNow方法来关闭线程池。它们的原理是遍历线
  * 程池中的工作线程，然后逐个调用线程的interrupt方法来中断线程，所以无法响应中断的任务
  * 可能永远无法终止。但是它们存在一定的区别，shutdownNow首先将线程池的状态设置成
