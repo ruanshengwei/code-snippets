@@ -8,7 +8,7 @@ import java.util.concurrent.Semaphore;
  * 一个线程池，现在有很多个任务，有的任务计算量很大，有的任务IO量很大计算量很小。现在去每个线程池去拉取任务执行，
  * 有可能有的线程池总是拉取到计算量很大的任务，有的总是拉取到计算量很小的任务。如何优化？
  */
-public class ThreadPoolDemo {
+public class ThreadPoolCpuAndIOTasksDemo {
 
     private static Semaphore timeSemaphore = new Semaphore(5);
 
