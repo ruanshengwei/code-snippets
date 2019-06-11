@@ -55,4 +55,8 @@
 <!--    set name = #{name,jdbcType=VARCHAR}-->
 <!--    where id = #{id,jdbcType=INTEGER}-->
 <!--  </update>-->
+
+  <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from myuser where id = #{id}
+  </select>
 </mapper>
