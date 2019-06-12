@@ -11,6 +11,25 @@ import java.util.Set;
  * 存取内容时，都是通过ThreadLocal作为key 操作 ThreadLocalMap 。
  *
  * 为什么ThreadLocalMap 中 {@link ThreadLocal.ThreadLocalMap.Entry} 是weakReference类型的？
+ *
+ * WeakReference是Java语言规范中为了区别直接的对象引用（程序中通过构造函数声明出来的对象引用）而定义的另外一种引用关系。
+ * WeakReference标志性的特点是：reference实例不会影响到被应用对象的GC回收行为
+ * （即只要对象被除WeakReference对象之外所有的对象解除引用后，该对象便可以被GC回收），
+ * 只不过在被对象回收之后，reference实例想获得被应用的对象时程序会返回null。
+ *
+ * 我认为是这样:
+ * 当一个ThrealLocal存在时,Entry即便是WeakReference的,但是因为容器中保留了 (static ThreadLocal<T>)还存在强引用,
+ * 所以该对象并不会被回收，依旧可以get set。
+ *
+ * 但是当容器中的ThreadLocal可能已经发挥完作用,不再需要了的时候。如果不是weakreference。Entry 将对该ThreadLocal存在强引用。
+ * 即便是外部将 static ThreadLocal = null 了。该threadLocal 仍然不会被回收。Entry.get仍将可以拿到ThreadLocal,这将导致
+ * 这部分的内存无法自动清理,需要手动获取到这些threadlocalmap 并置空,且也不方便,至少得多做一个注册中心管理,以及监听器等。
+ *
+ * 而使用 weakReference 的情况下。 entry这部分的threadlocal会随着gc回收的时候被回收（且不会因为强引用导致heap中的内存无法清理）
+ *
+ * 但随着gc回收 entry.get 会为空,但是 entry对value存在强引用,value无法自己被回收,
+ * 所以threadlocal 的 set get等方法中存在对key null的判断,以此来手动回收value
+ *
  */
 public class ThreadLocalMemoryLeakDemo {
 
@@ -28,7 +47,9 @@ public class ThreadLocalMemoryLeakDemo {
 
         //没有使用weakreference的情况下,product 置 null 后内存并为收回（map中还存在强引用）
         Product productA = new Product("1","A");
-
+        /**
+         * //debug breakpoint 记录 productA的内存地址 (例如:HashMap@512)
+         */
         Map mapA = new HashMap();
         mapA.put(productA,1);
         productA=null;
@@ -36,6 +57,7 @@ public class ThreadLocalMemoryLeakDemo {
         Set keySetA =  mapA.keySet();
         System.out.println(keySetA);
 
+        //
         Product productB = new Product("2","B");
         WeakReference<Product> weakProductB = new WeakReference<>(productB);
 
@@ -50,6 +72,10 @@ public class ThreadLocalMemoryLeakDemo {
                 System.out.println(weakReference.get());
                 System.out.println("not null");
             }else {
+                /**
+                 * //debug breakpoint 记录 productA的内存地址 (例如:HashMap@512)
+                 * 进行到此刻。可以在idea中的Memory中查看Product还剩几个。结果是1个。B 已经被回收。A 因为mapA存在的强引用并没有被回收
+                 */
                 System.out.println("Object has been collected.");
                 break;
             }

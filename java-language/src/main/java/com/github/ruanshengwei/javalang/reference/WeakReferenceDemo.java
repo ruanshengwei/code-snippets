@@ -18,6 +18,7 @@ public class WeakReferenceDemo {
                 i++;
                 System.out.println("Object is alive for "+i+" loops - "+weakCar);
             }else{
+                //很奇怪 run的时候会进来 debug的时候进不来,暂时想不到原因。记录一下
                 System.out.println("Object has been collected.");
                 break;
             }
