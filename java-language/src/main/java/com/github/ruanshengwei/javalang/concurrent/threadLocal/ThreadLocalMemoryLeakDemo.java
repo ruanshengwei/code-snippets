@@ -18,6 +18,8 @@ import java.util.Set;
  * （即只要对象被除WeakReference对象之外所有的对象解除引用后，该对象便可以被GC回收），
  * 只不过在被对象回收之后，reference实例想获得被应用的对象时程序会返回null。
  *
+ * weakReference本身作为载体是强引用的。所以{@link ThreadLocal.ThreadLocalMap.Entry} 中的value需要自行清理
+ *
  * 我认为是这样:
  * 当一个ThrealLocal存在时,Entry即便是WeakReference的,但是因为容器中保留了 (static ThreadLocal<T>)还存在强引用,
  * 所以该对象并不会被回收，依旧可以get set。
