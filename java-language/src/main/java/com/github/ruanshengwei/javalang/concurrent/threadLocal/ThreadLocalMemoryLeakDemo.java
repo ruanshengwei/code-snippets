@@ -1,5 +1,6 @@
 package com.github.ruanshengwei.javalang.concurrent.threadLocal;
 
+import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,11 +36,13 @@ public class ThreadLocalMemoryLeakDemo {
 
     private static ThreadLocal<String> shareThreadLoacl = new ThreadLocal<>();
 
+    private static ReferenceQueue<Product> referenceQueue = new ReferenceQueue();
+
     public static void main(String[] args) throws InterruptedException {
 
 //        threadLocalTest();
 
-        weakReferenceTest();
+//        weakReferenceTest();
 
     }
 
@@ -59,7 +62,7 @@ public class ThreadLocalMemoryLeakDemo {
 
         //
         Product productB = new Product("2","B");
-        WeakReference<Product> weakProductB = new WeakReference<>(productB);
+        WeakReference<Product> weakProductB = new WeakReference<>(productB,referenceQueue);
 
         Map mapB = new HashMap();
         mapB.put(weakProductB,1);
@@ -71,11 +74,16 @@ public class ThreadLocalMemoryLeakDemo {
             if (weakReference.get()!=null){
                 System.out.println(weakReference.get());
                 System.out.println("not null");
+                System.out.println("referenceQueue :"+referenceQueue.poll());
             }else {
                 /**
                  * //debug breakpoint 记录 productA的内存地址 (例如:HashMap@512)
                  * 进行到此刻。可以在idea中的Memory中查看Product还剩几个。结果是1个。B 已经被回收。A 因为mapA存在的强引用并没有被回收
                  */
+                WeakReference<Product> productWeakReference;
+                if((productWeakReference = (WeakReference) referenceQueue.poll()) != null) {
+                    System.out.println("回收了:" + productWeakReference);
+                }
                 System.out.println("Object has been collected.");
                 break;
             }
