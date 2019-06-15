@@ -1,6 +1,5 @@
 package com.github.ruanshengwei.javalang.proxy.dynamicproxy;
 
-import com.github.ruanshengwei.javalang.proxy.ClassUserDao;
 import com.github.ruanshengwei.javalang.proxy.IUserDao;
 import com.github.ruanshengwei.javalang.proxy.UserDao;
 
@@ -14,6 +13,10 @@ import com.github.ruanshengwei.javalang.proxy.UserDao;
  * 特点：
  * 动态代理对象不需要实现接口，但是要求目标对象必须实现接口，否则不能使用动态代理。
  *
+ *
+ * 无论是传接口还是传类，最终都要在运行期通过构造字节码动态创建一个代理类出来。
+ * cglib可以实现动态代理类，jdk只能动态代理接口，可能设计proxy的人就是想要加这个限制，因为动态代理类实现起来要麻烦很多，
+ * final class要抛异常，final method不能覆写，而接口只需要遍历方法每个都实现即可。
  */
 public class DynamicUserProxy {
 
@@ -23,6 +26,17 @@ public class DynamicUserProxy {
 
 //       classTest();
 
+       finalMethodTest();
+
+    }
+
+    private static void finalMethodTest() {
+        System.out.println("----------finalMethodTest-----------");
+        IUserDao target = new UserDao();
+        System.out.println(target.getClass());  //输出目标对象信息
+        IUserDao proxy = (IUserDao) new ProxyFactory(target).getProxyInstance();
+        System.out.println(proxy.getClass());  //输出代理对象信息
+        proxy.finalClass();  //执行代理方法
     }
 
     private static void classTest() {
@@ -36,11 +50,11 @@ public class DynamicUserProxy {
     }
 
     private static void interfaceTest() {
-
+        System.out.println("----------interfaceTest-----------");
         IUserDao target = new UserDao();
         System.out.println(target.getClass());  //输出目标对象信息
         IUserDao proxy = (IUserDao) new ProxyFactory(target).getProxyInstance();
         System.out.println(proxy.getClass());  //输出代理对象信息
-        proxy.finalClass();  //执行代理方法
+        proxy.save();  //执行代理方法
     }
 }

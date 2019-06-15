@@ -25,19 +25,13 @@ public class CglibUserProxy {
 
         interfaceTest();
 
+        finalMethodTest();
+
         classTest();
     }
 
-    private static void classTest() {
-
-        ClassUserDao classUserDao = new ClassUserDao();
-
-        ClassUserDao proxy =  (ClassUserDao) new ProxyFactory(classUserDao).getProxyInstance();
-
-        proxy.classPrint();
-    }
-
-    private static void interfaceTest() {
+    private static void finalMethodTest() {
+        System.out.println("----------finalMethodTest-----------");
         //目标对象
         UserDao target = new UserDao();
         System.out.println(target.getClass());
@@ -46,6 +40,26 @@ public class CglibUserProxy {
         System.out.println(proxy.getClass());
         //执行代理对象方法
         proxy.print();
-        System.out.println("---------------------");
+    }
+
+    private static void classTest() {
+        System.out.println("----------classTest-----------");
+        ClassUserDao classUserDao = new ClassUserDao();
+
+        ClassUserDao proxy =  (ClassUserDao) new ProxyFactory(classUserDao).getProxyInstance();
+
+        proxy.classPrint();
+    }
+
+    private static void interfaceTest() {
+        System.out.println("----------interfaceTest-----------");
+        //目标对象
+        UserDao target = new UserDao();
+        System.out.println(target.getClass());
+        //代理对象
+        UserDao proxy = (UserDao) new ProxyFactory(target).getProxyInstance();
+        System.out.println(proxy.getClass());
+        //执行代理对象方法
+        proxy.print();
     }
 }
