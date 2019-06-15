@@ -1,6 +1,8 @@
 package com.github.ruanshengwei.javalang.proxy.staticproxy;
 
-public class UserDaoProxy implements IUserDao{
+import com.github.ruanshengwei.javalang.proxy.IUserDao;
+
+public class UserDaoProxy implements IUserDao {
 
     private IUserDao target;
     public UserDaoProxy(IUserDao target) {

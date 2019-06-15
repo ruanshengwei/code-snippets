@@ -1,5 +1,8 @@
 package com.github.ruanshengwei.javalang.proxy.staticproxy;
 
+import com.github.ruanshengwei.javalang.proxy.IUserDao;
+import com.github.ruanshengwei.javalang.proxy.UserDao;
+
 /**
  * 静态代理
  */
