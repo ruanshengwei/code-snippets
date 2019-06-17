@@ -39,7 +39,7 @@ public class CglibUserProxy {
         UserDao proxy = (UserDao) new ProxyFactory(target).getProxyInstance();
         System.out.println(proxy.getClass());
         //执行代理对象方法
-        proxy.print();
+        proxy.finalClass();
     }
 
     private static void classTest() {
