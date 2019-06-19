@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -30,10 +29,17 @@ public class StreamDemo {
 
     @Test
     public void testPeek(){
-        Stream.of("one", "two", "three","four")
-//                .peek(e->System.out.println(e+" : "+e.length()))
+        Stream.of("one", "two", "three","four").parallel()
+                .peek(e->System.out.println(e+" : "+e.length()))
                 .filter(e -> e.length() > 3)
-                .peek(e -> System.out.println("Filtered value: " + e))
+                .peek(e -> {
+                    System.out.println("Filtered value: " + e);
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                })
                 .map(String::toUpperCase)
                 .peek(e -> System.out.println("Mapped value: " + e))
                 .collect(Collectors.toList());
