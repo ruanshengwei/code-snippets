@@ -30,7 +30,7 @@ public class FlowDemo {
                 // 接受到一个数据, 处理
                 System.out.println("接受到数据: " + item);
                 try {
-                    TimeUnit.SECONDS.sleep(3);
+                    TimeUnit.MILLISECONDS.sleep(30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -66,6 +66,7 @@ public class FlowDemo {
             System.out.println("生成数据:" + i);
             // submit是个block方法
             publiser.submit(i);
+//            publiser.offer(i,1,TimeUnit.MILLISECONDS,(a,b)->{return false;});
         }
 
         // 5. 结束后 关闭发布者
@@ -73,7 +74,7 @@ public class FlowDemo {
         publiser.close();
 
         // 主线程延迟停止, 否则数据没有消费就退出
-        Thread.currentThread().join(1000);
+        Thread.currentThread().join(10000);
         // debug的时候, 下面这行需要有断点
         // 否则主线程结束无法debug
         System.out.println();
