@@ -6,7 +6,8 @@ import java.io.PrintStream;
 import java.io.Serializable;
 
 /**
- *
+ * 由此可见 c1 情况并未捕获捕捉变量
+ * c2 c3情况下会捕捉变量。一旦需要序列化的时候（序列化lambda产生的动态类），会序列化变量。此时如果变量未实现序列化则会导致错误。
  */
 public class CapturingLambdaDemo {
 
