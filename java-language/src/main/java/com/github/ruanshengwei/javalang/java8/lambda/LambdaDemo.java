@@ -10,7 +10,7 @@ public class LambdaDemo {
 
     public static void main(String[] args) {
         Thread A = new Thread(()->{
-           System.out.println("Lambda A");
+            System.out.println("Lambda A");
         });
 
         Thread B = new Thread(new Runnable() {
@@ -22,6 +22,12 @@ public class LambdaDemo {
 
         A.start();
         B.start();
+
+        //capturing lambda
+        // System.out被捕获了。可以在LambdaDemo$$Lambda$14.class 中清楚地看到PrintStream变量被传入到了构造函数中
+        //输出lambda innerclass文件 在idea Run configuartion 增加-Djdk.internal.lambda.dumpProxyClasses=<输出路径>
+        VoidFunction<String> stringVoidFunction = System.out::println;
+        stringVoidFunction.call("one");
     }
 
 }
