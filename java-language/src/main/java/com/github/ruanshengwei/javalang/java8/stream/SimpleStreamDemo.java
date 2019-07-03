@@ -269,4 +269,20 @@ public class SimpleStreamDemo {
         System.out.println("Any child? " + isThereAnyChild);
 
     }
+
+    @Test
+    public void collectorsListToMap(){
+        List<Person> persons = new ArrayList();
+        persons.add(new Person(1, "name" + 1, 10));
+        persons.add(new Person(2, "name" + 2, 21));
+        persons.add(new Person(3, "name" + 3, 34));
+        persons.add(new Person(4, "name" + 4, 6));
+        persons.add(new Person(5, "name" + 5, 55));
+
+        Map<String,Person> map = persons.stream().collect(Collectors.toMap(a->{
+            return String.valueOf(a.getNo());
+        },a->a));
+
+        System.out.println(map);
+    }
 }
